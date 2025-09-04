@@ -3,6 +3,7 @@ package week4;
 import static java.lang.Thread.sleep;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class w4e2 {
     public static void main(String[] args) {
@@ -30,7 +31,7 @@ public class w4e2 {
         // TODO: Create a CachedThreadPool
         // Submit 10 tasks
         // Each task should sleep for 2 seconds and then print the thread name
-        executor.close();
+        executor.shutdown();
         System.out.println("After closing active threads -> " + Thread.activeCount());
         executor = Executors.newCachedThreadPool();
         for(int i = 0; i < 10; i++){
@@ -48,7 +49,7 @@ public class w4e2 {
                 
             );
         }
-        executor.close();
+        executor.shutdown();
         
 
         // ========== Exercise 3 ==========
@@ -73,7 +74,13 @@ public class w4e2 {
                 
             );
         }
-        executor.close();
+        executor.shutdown();
+        try {
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }  
+        System.out.println("Done");
 
         // NOTE: Remember to shutdown executors after use
     }
