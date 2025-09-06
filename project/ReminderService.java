@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ReminderService {
-    private static ExecutorService reminderServiceRunner = Executors.newCachedThreadPool();
+    private static ExecutorService reminderServiceRunner = Executors.newFixedThreadPool(1);
     private static long oneHour = 3600000;
 
     public static void schedule(Task task) {
