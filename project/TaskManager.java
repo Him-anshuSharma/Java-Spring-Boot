@@ -14,6 +14,7 @@ class TaskManager {
 
     public void addTask(Task task) {
         tasks.add(task);
+        ReminderService.schedule(task);
     }
 
     public List<Task> viewAllTasks() {

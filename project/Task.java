@@ -63,7 +63,11 @@ class Task {
         this.dueDateTime = dueDateTime;
         this.priority = priority;
         this.status = Status.NOT_STARTED;
-        id = _id++;
+        id = generateId();
+    }
+
+    private synchronized int generateId() {
+        return _id++;
     }
 
     @Override
