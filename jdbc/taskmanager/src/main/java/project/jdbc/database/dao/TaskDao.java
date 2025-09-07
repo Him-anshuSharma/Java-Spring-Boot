@@ -42,6 +42,51 @@ public class TaskDao {
 
     }
 
+    public boolean updateTask(Task task) {
+
+        String sqlQuery = "Update tasks set title=?,description=?,due=?,priority=?,status=? where id = ? ";
+        PreparedStatement query;
+        try {
+
+            query = connection.prepareStatement(sqlQuery);
+            query.setString(1, task.getTitle());
+            query.setString(2, task.getDescription());
+            query.setTimestamp(3, Timestamp.valueOf(task.getDueDateTime()));
+            query.setString(4, task.getPriority().name());
+            query.setString(5, task.getStatus().name());
+            query.setInt(6, task.getId());
+
+            query.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    public boolean deleteTask(int id) {
+        String sqlQuery = "Delete from tasks where id = ? ";
+        PreparedStatement query;
+        try {
+
+            query = connection.prepareStatement(sqlQuery);
+
+            query.setInt(1, id);
+
+            query.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
     public List<Task> getAllTasks() {
         String sqlQuery = "select * from tasks";
         List<Task> tasks = new ArrayList<>();

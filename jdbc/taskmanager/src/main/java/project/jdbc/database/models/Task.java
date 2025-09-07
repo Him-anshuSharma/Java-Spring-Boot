@@ -86,8 +86,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nDescription: " + description + "\nDue Date: " + dueDateTime + "\nPriority: "
-                + priority + "\nStatus: " + status;
+        return "\n\nTitle: " + title + "\nDescription: " + description + "\nDue Date: " + dueDateTime + "\nPriority: "
+                + priority + "\nStatus: " + status + "\n\n";
     }
 
     public enum Priority {
