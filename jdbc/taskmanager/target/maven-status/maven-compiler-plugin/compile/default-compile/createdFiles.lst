@@ -1,0 +1,8 @@
+project/jdbc/App.class
+project/jdbc/database/DBInit.class
+project/jdbc/database/dao/TaskDao.class
+project/jdbc/database/DBConnection.class
+project/jdbc/database/models/Task.class
+project/jdbc/database/models/Task$Priority.class
+project/jdbc/database/models/Task$Status.class
+project/jdbc/database/DBConfig.class
