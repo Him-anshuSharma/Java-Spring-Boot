@@ -1,0 +1,7 @@
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/App.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/jpa/dao/UserDao.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/jpa/entities/Task.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/jpa/entities/User.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/jpa/helpers/DbHelpers.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/jpa/helpers/EmfProvider.java
+/Users/himanshu/Desktop/Java-Spring-Boot/jpa+hibernate/TaskManager/src/main/java/project/hibernate/service/UserService.java

@@ -1,0 +1,9 @@
+project/hibernate/jpa/helpers/EmfProvider.class
+project/hibernate/service/UserService.class
+project/hibernate/jpa/entities/Task$Priority.class
+project/hibernate/jpa/dao/UserDao.class
+project/hibernate/jpa/helpers/DbHelpers.class
+project/hibernate/jpa/entities/Task$Status.class
+project/hibernate/jpa/entities/Task.class
+project/hibernate/App.class
+project/hibernate/jpa/entities/User.class
