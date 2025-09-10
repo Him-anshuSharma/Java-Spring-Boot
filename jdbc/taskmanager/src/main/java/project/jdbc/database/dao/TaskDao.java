@@ -35,6 +35,7 @@ public class TaskDao {
 
             // execute
             query.executeUpdate();
+            query.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +58,7 @@ public class TaskDao {
             query.setInt(6, task.getId());
 
             query.executeUpdate();
-
+            query.close();
             return true;
 
         } catch (Exception e) {
@@ -77,7 +78,7 @@ public class TaskDao {
             query.setInt(1, id);
 
             query.executeUpdate();
-
+            query.close();
             return true;
 
         } catch (Exception e) {
@@ -100,6 +101,8 @@ public class TaskDao {
                 tmp = getTaskFromResults(result);
                 tasks.add(tmp);
             }
+            query.close();
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

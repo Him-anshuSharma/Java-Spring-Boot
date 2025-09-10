@@ -8,9 +8,9 @@ public class DBConnection {
 
     private static Connection instance;
 
-    public static void disconnect() {
+    public static void disconnect() throws SQLException {
         System.out.println("Database disconnected");
-        instance = null;
+        instance.close();
     }
 
     public static Connection getConnection() {

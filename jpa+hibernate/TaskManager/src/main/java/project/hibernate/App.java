@@ -4,8 +4,8 @@ import project.hibernate.jpa.entities.Task;
 import project.hibernate.jpa.entities.Task.Priority;
 import project.hibernate.jpa.entities.Task.Status;
 import project.hibernate.jpa.helpers.EmfProvider;
+import project.hibernate.jpa.service.UserService;
 import project.hibernate.jpa.entities.User;
-import project.hibernate.service.UserService;
 
 import java.time.LocalDateTime;
 

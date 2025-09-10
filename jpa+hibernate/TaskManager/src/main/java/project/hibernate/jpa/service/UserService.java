@@ -1,4 +1,4 @@
-package project.hibernate.service;
+package project.hibernate.jpa.service;
 
 import project.hibernate.jpa.dao.UserDao;
 import project.hibernate.jpa.entities.User;
