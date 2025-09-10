@@ -23,6 +23,14 @@ public class User {
     List<Task> tasks;
 
     public User() {
+        tasks = new ArrayList<>();
+    }
+
+    public User(User usr) {
+        this.name = usr.getName();
+        if (this.tasks == null)
+            this.tasks = new ArrayList<>();
+        this.tasks.addAll(usr.getTasks());
     }
 
     public User(String name) {
