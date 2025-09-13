@@ -60,6 +60,10 @@ public class App {
         finalTasks.forEach(System.out::println);
 
         // 8️⃣ Disconnect
-        DBConnection.disconnect();
+        try {
+            DBConnection.disconnect();
+        } catch (Exception e) {
+            System.out.println("Error disconnecting: " + e.getMessage());
+        }
     }
 }

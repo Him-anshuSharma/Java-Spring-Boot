@@ -8,7 +8,6 @@ import spring.boot.spring_boot_jpa.services.UserService;
 
 @SpringBootApplication
 public class SpringBootJpaApplication {
-
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(SpringBootJpaApplication.class, args);
 		UserService userService = context.getBean(UserService.class);
