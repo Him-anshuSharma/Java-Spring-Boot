@@ -1,4 +1,4 @@
-package jdbc.taskmanager.src.test.java.project.jdbcmanagement.src.test.java.project.jdbc;
+package project.jdbc;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
