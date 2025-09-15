@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -19,8 +21,39 @@ public class Student {
     @Max(25)
     private int age;
 
-    Student(){
+    public Department getDepartment() {
+        return department;
+    }
 
+    public void setDepartment(Department department) {
+        this.department = department;
+        if (!department.getStudentList().contains(this)) {
+            department.getStudentList().add(this);
+        }
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "students_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courseList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    Student() {
+
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
     public Student(String name, String email, int age) {
@@ -57,13 +90,24 @@ public class Student {
         return age;
     }
 
+    public void addCourses(List<Course> courseList) {
+        courseList.forEach((course) -> {
+            this.courseList.add(course);
+            course.getStudentList().add(this);
+        });
+    }
+
+
     @Override
     public String toString() {
         return "Student{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
-                ", id=" + id +
+                ", courses=" + courseList.stream()
+                .map(Course::getCourseName)
+                .toList() +
                 '}';
     }
 
