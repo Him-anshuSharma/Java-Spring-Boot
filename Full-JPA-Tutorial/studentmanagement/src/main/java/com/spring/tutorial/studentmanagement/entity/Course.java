@@ -1,6 +1,7 @@
-package student.management.application.entity;
+package com.spring.tutorial.studentmanagement.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,12 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotNull
+    @Column(unique = true)
     private String courseName;
 
-    @ManyToMany(mappedBy = "courseList",fetch = FetchType.EAGER)
-    private List<Student> studentList = new ArrayList<>();
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students = new ArrayList<>();
 
     public Course(){
 
@@ -38,22 +41,5 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public List<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(List<Student> studentList) {
-        this.studentList = studentList;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", courseName='" + courseName + '\'' +
-                ", studentList=" + studentList +
-                '}';
     }
 }
