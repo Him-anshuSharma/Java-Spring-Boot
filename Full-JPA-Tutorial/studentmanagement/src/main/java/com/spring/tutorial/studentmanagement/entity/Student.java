@@ -15,19 +15,17 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotNull
     private String name;
-    @NotNull
     @Column(unique = true)
     private String email;
-    @NotNull
-    @Min(15)
-    @Max(24)
+
     private int age;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    private String password;
 
     @ManyToMany
     @JoinTable(
@@ -41,10 +39,11 @@ public class Student {
 
     }
 
-    public Student(String name, String email, int age) {
+    public Student(String name, String email, int age,String password) {
         this.name = name;
         this.email = email;
         this.age = age;
+        this.password = password;
     }
 
     public int getId() {

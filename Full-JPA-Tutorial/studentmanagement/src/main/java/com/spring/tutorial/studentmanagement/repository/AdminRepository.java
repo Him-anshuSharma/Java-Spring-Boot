@@ -1,12 +1,13 @@
 package com.spring.tutorial.studentmanagement.repository;
 
-import com.spring.tutorial.studentmanagement.entity.Department;
+import com.spring.tutorial.studentmanagement.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department,Integer> {
-    Optional<Department> findBydepartmentName(String name);
+public interface AdminRepository extends JpaRepository<Admin,Integer> {
+
+    Optional<Admin> findByEmailAndPassword(String email, String password);
 }

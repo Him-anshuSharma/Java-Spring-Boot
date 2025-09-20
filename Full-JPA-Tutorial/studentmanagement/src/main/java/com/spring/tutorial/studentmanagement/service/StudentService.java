@@ -15,8 +15,16 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public void save(Student student){
-        studentRepository.save(student);
+    public Optional<Student> verifyStudent(String email,String password){
+        return studentRepository.findByEmailAndPassword(email, password);
+    }
+
+    public Optional<Student> save(Student student){
+        Optional<Student> result = studentRepository.findByEmail(student.getEmail());
+        if(result.isPresent()){
+            return Optional.empty();
+        }
+        return Optional.of(studentRepository.save(student));
     }
 
     public List<Student> findAll(){

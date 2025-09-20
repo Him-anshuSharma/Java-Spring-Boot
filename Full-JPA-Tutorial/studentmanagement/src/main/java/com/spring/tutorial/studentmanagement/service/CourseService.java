@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -14,8 +15,13 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public void save(Course course){
-        courseRepository.save(course);
+    public Optional<Course> save(Course course){
+
+        Optional<Course> courseOptional = courseRepository.findBycourseNameIgnoreCase(course.getCourseName());
+        if(courseOptional.isPresent()){
+            return Optional.empty();
+        }
+        else return Optional.of(courseRepository.save(course));
     }
 
     public List<Course> findAll(){
