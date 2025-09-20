@@ -99,10 +99,18 @@ public class AdminController {
                                 HttpStatus.CREATED,
                                 "Created",
                                 value))
-                .orElseGet(() -> new ResponseDto(
+                .orElseGet(() -> new ResponseDto<>(
                         HttpStatus.INTERNAL_SERVER_ERROR,
                         "Department Already Exist!",
                         null));
+    }
+
+    @PostMapping("/delete-student/{id}")
+    public ResponseDto<String> deleteStudent(@PathVariable int id) {
+        if(studentService.deleteStudent(id)){
+            return new ResponseDto<String>(HttpStatus.OK,"Deleted","Student Deleted Succesfully");
+        }
+        else return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR,"Student Does not exist","Recheck Id");
     }
 
 }
