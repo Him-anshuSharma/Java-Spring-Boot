@@ -3,6 +3,7 @@ package com.spring.tutorial.studentmanagement.controller;
 import com.spring.tutorial.studentmanagement.dto.CreateStudentDto;
 import com.spring.tutorial.studentmanagement.dto.LoginRequestDto;
 import com.spring.tutorial.studentmanagement.dto.ResponseDto;
+import com.spring.tutorial.studentmanagement.dto.UpdateStudentDto;
 import com.spring.tutorial.studentmanagement.entity.Admin;
 import com.spring.tutorial.studentmanagement.entity.Course;
 import com.spring.tutorial.studentmanagement.entity.Department;
@@ -13,6 +14,7 @@ import com.spring.tutorial.studentmanagement.service.DepartmentService;
 import com.spring.tutorial.studentmanagement.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,6 +113,17 @@ public class AdminController {
             return new ResponseDto<String>(HttpStatus.OK,"Deleted","Student Deleted Succesfully");
         }
         else return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR,"Student Does not exist","Recheck Id");
+    }
+
+    @PostMapping("/update-student")
+    public ResponseDto<Student> updateStudent(@Valid @RequestBody UpdateStudentDto updateStudentDto){
+        Optional<Student> student = studentService.updateStudent(updateStudentDto);
+        return student.map(value ->
+                new ResponseDto<>(HttpStatus.OK, "Updated", value)
+                )
+                .orElseGet(() ->
+                        new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, "Student does not exist", null)
+                );
     }
 
 }

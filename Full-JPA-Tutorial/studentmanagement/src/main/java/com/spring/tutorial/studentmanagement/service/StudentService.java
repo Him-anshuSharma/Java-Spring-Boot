@@ -1,6 +1,11 @@
 package com.spring.tutorial.studentmanagement.service;
 
+import com.spring.tutorial.studentmanagement.dto.UpdateStudentDto;
+import com.spring.tutorial.studentmanagement.entity.Course;
+import com.spring.tutorial.studentmanagement.entity.Department;
 import com.spring.tutorial.studentmanagement.entity.Student;
+import com.spring.tutorial.studentmanagement.repository.CourseRepository;
+import com.spring.tutorial.studentmanagement.repository.DepartmentRepository;
 import com.spring.tutorial.studentmanagement.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,10 @@ import java.util.Optional;
 public class StudentService {
     @Autowired
     StudentRepository studentRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     public Optional<Student> verifyStudent(String email,String password){
         return studentRepository.findByEmailAndPassword(email, password);
@@ -46,5 +55,28 @@ public class StudentService {
         if(student.isEmpty()) return false;
         studentRepository.delete(student.get());
         return true;
+    }
+
+    public Optional<Student> updateStudent(UpdateStudentDto student){
+        Optional<Student> result = studentRepository.findById(student.getId());
+        if(result.isPresent()){
+            Student newStudent = result.get();
+            newStudent.setName(student.getName());
+            newStudent.setAge(student.getAge());
+            newStudent.setEmail(student.getEmail());
+            if(newStudent.getDepartment()== null || student.getDepartmentId() != newStudent.getDepartment().getId()){
+                Optional<Department> department = departmentRepository.findById(student.getDepartmentId());
+                department.ifPresent(newStudent::setDepartment);
+            }
+            if(student.getCourses() != null){
+                newStudent.getCourses().clear();
+                for (int courseId : student.getCourses()) {
+                    Optional<Course> course = courseRepository.findById(courseId);
+                    course.ifPresent(value -> newStudent.getCourses().add(value));
+                }
+            }
+            return Optional.of(studentRepository.save(newStudent));
+        }
+        return Optional.empty();
     }
 }

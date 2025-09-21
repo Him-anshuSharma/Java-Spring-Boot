@@ -2,7 +2,10 @@ package com.spring.tutorial.studentmanagement.controller;
 
 import com.spring.tutorial.studentmanagement.dto.LoginRequestDto;
 import com.spring.tutorial.studentmanagement.dto.ResponseDto;
+import com.spring.tutorial.studentmanagement.dto.UpdateStudentDto;
+import com.spring.tutorial.studentmanagement.entity.Course;
 import com.spring.tutorial.studentmanagement.entity.Student;
+import com.spring.tutorial.studentmanagement.service.CourseService;
 import com.spring.tutorial.studentmanagement.service.StudentService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -41,6 +44,12 @@ public class StudentController {
             );
         }
 
+    }
+
+    @PostMapping("/add-course")
+    ResponseDto<Student> addCourse(@Valid @RequestBody UpdateStudentDto request){
+        Optional<Student> student = studentService.updateStudent(request);
+        return student.map(value -> new ResponseDto<>(HttpStatus.OK, "Updated", value)).orElseGet(() -> new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, "Student not present in records", null));
     }
 
 }
