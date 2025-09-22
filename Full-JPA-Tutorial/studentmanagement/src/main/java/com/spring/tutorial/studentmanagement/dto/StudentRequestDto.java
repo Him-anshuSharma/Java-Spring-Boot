@@ -1,39 +1,36 @@
 package com.spring.tutorial.studentmanagement.dto;
 
-import com.spring.tutorial.studentmanagement.entity.Student;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
-public class UpdateStudentDto {
-    @NotNull
-    private int id;
+public class StudentRequestDto {
+    private Integer id; // optional for create, required for update
     @NotNull
     private String name;
     @Email
     private String email;
-    @Min(15)@Max(25)
+    @Min(15) @Max(25)
     private int age;
     @NotNull
     @Size(min = 8)
     private String password;
-    @NotNull
-    private List<Integer> courses;
-    @NotNull
-    private int departmentId;
-    public UpdateStudentDto() {
+    private List<Integer> courses;   // optional for create
+    private Integer departmentId;
+
+    public StudentRequestDto() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -72,11 +69,11 @@ public class UpdateStudentDto {
         this.courses = courses;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 }

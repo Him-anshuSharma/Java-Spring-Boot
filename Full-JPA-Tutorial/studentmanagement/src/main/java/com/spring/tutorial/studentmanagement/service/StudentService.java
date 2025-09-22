@@ -1,6 +1,6 @@
 package com.spring.tutorial.studentmanagement.service;
 
-import com.spring.tutorial.studentmanagement.dto.UpdateStudentDto;
+import com.spring.tutorial.studentmanagement.dto.StudentRequestDto;
 import com.spring.tutorial.studentmanagement.entity.Course;
 import com.spring.tutorial.studentmanagement.entity.Department;
 import com.spring.tutorial.studentmanagement.entity.Student;
@@ -57,7 +57,7 @@ public class StudentService {
         return true;
     }
 
-    public Optional<Student> updateStudent(UpdateStudentDto student){
+    public Optional<Student> updateStudent(StudentRequestDto student){
         Optional<Student> result = studentRepository.findById(student.getId());
         if(result.isPresent()){
             Student newStudent = result.get();

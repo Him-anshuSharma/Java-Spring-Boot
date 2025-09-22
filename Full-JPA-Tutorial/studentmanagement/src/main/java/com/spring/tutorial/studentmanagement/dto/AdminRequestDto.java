@@ -1,28 +1,19 @@
 package com.spring.tutorial.studentmanagement.dto;
 
-import jakarta.validation.constraints.*;
+import com.spring.tutorial.studentmanagement.entity.Admin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public class CreateStudentDto {
+public class AdminRequestDto {
     @NotNull
     private String name;
     @Email
     private String email;
-    @Min(15)@Max(25)
-    private int age;
-    @NotNull
     @Size(min = 8)
     private String password;
 
-
-    public CreateStudentDto(){
-
-    }
-
-    public CreateStudentDto(String name, String email, int age, String password) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.password = password;
+    public AdminRequestDto() {
     }
 
     public String getName() {
@@ -41,14 +32,6 @@ public class CreateStudentDto {
         this.email = email;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -56,4 +39,9 @@ public class CreateStudentDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public static Admin toAdmin(AdminRequestDto adminRequestDto){
+        return new Admin(adminRequestDto.password,adminRequestDto.email,adminRequestDto.name);
+    }
+
 }

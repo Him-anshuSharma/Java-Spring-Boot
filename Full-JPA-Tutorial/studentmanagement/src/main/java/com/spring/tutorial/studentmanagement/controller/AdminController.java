@@ -1,9 +1,6 @@
 package com.spring.tutorial.studentmanagement.controller;
 
-import com.spring.tutorial.studentmanagement.dto.CreateStudentDto;
-import com.spring.tutorial.studentmanagement.dto.LoginRequestDto;
-import com.spring.tutorial.studentmanagement.dto.ResponseDto;
-import com.spring.tutorial.studentmanagement.dto.UpdateStudentDto;
+import com.spring.tutorial.studentmanagement.dto.*;
 import com.spring.tutorial.studentmanagement.entity.Admin;
 import com.spring.tutorial.studentmanagement.entity.Course;
 import com.spring.tutorial.studentmanagement.entity.Department;
@@ -14,7 +11,6 @@ import com.spring.tutorial.studentmanagement.service.DepartmentService;
 import com.spring.tutorial.studentmanagement.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,17 +30,13 @@ public class AdminController {
     private DepartmentService departmentService;
 
     @PostMapping("/login")
-    public ResponseDto<Admin> getAdmin(@Valid @RequestBody LoginRequestDto request){
+    public ResponseDto<AdminResponseDto> createAdmin(@Valid @RequestBody LoginRequestDto request){
         Optional<Admin> admin = adminService.verifyAdmin(request.getUsername(),request.getPassword());
         if(admin.isPresent()){
-            return new ResponseDto<Admin>(
-                    HttpStatus.OK,
-                    "Verified",
-                    admin.get()
-            );
+            return new ResponseDto<>(HttpStatus.CREATED,"Created",AdminResponseDto.fromAdmin(admin.get()));
         }
         else{
-            return new ResponseDto<Admin>(
+            return new ResponseDto<>(
                     HttpStatus.NOT_FOUND,
                     "wrong credentials",
                     null
@@ -53,16 +45,16 @@ public class AdminController {
     }
 
     @PostMapping("/create-student")
-    public ResponseDto<Student> createStudent(@Valid @RequestBody CreateStudentDto request){
+    public ResponseDto<StudentResponseDto> createStudent(@Valid @RequestBody StudentRequestDto request){
         Optional<Student> student = studentService.save(new Student(
                 request.getName(),request.getEmail(), request.getAge(), request.getPassword()
         ));
 
         if(student.isPresent()){
-            return new ResponseDto<Student>(
+            return new ResponseDto<>(
                     HttpStatus.CREATED,
                     "Created Student",
-                    student.get()
+                    StudentResponseDto.fromStudent(student.get())
             );
         }
         else{
@@ -76,14 +68,14 @@ public class AdminController {
 
 
     @PostMapping("/add-course/{courseName}")
-    public ResponseDto<Course> addCourse(@PathVariable String courseName){
+    public ResponseDto<CourseDto> addCourse(@PathVariable String courseName){
         Optional<Course> course = courseService.save(new Course(courseName));
         return course
                 .map(value ->
                         new ResponseDto<>(
                             HttpStatus.CREATED,
                             "Course Created",
-                            value))
+                            CourseDto.fromCourse(value)))
                 .orElseGet(() ->
                         new ResponseDto<>(
                             HttpStatus.INTERNAL_SERVER_ERROR,
@@ -93,14 +85,14 @@ public class AdminController {
     }
 
     @PostMapping("/add-department/{deptName}")
-    public ResponseDto<Department> addDepartment(@PathVariable String deptName){
+    public ResponseDto<DepartmentDto> addDepartment(@PathVariable String deptName){
         Optional<Department> department = departmentService.save(new Department(deptName));
         return department
                 .map(value ->
                         new ResponseDto<>(
                                 HttpStatus.CREATED,
                                 "Created",
-                                value))
+                                DepartmentDto.fromDepartment(value)))
                 .orElseGet(() -> new ResponseDto<>(
                         HttpStatus.INTERNAL_SERVER_ERROR,
                         "Department Already Exist!",
@@ -110,16 +102,16 @@ public class AdminController {
     @PostMapping("/delete-student/{id}")
     public ResponseDto<String> deleteStudent(@PathVariable int id) {
         if(studentService.deleteStudent(id)){
-            return new ResponseDto<String>(HttpStatus.OK,"Deleted","Student Deleted Succesfully");
+            return new ResponseDto<String>(HttpStatus.OK,"Deleted","Student Deleted Successfully");
         }
         else return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR,"Student Does not exist","Recheck Id");
     }
 
     @PostMapping("/update-student")
-    public ResponseDto<Student> updateStudent(@Valid @RequestBody UpdateStudentDto updateStudentDto){
+    public ResponseDto<StudentResponseDto> updateStudent(@Valid @RequestBody StudentRequestDto updateStudentDto){
         Optional<Student> student = studentService.updateStudent(updateStudentDto);
         return student.map(value ->
-                new ResponseDto<>(HttpStatus.OK, "Updated", value)
+                new ResponseDto<>(HttpStatus.OK, "Updated", StudentResponseDto.fromStudent(value))
                 )
                 .orElseGet(() ->
                         new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, "Student does not exist", null)
